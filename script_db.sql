@@ -4,7 +4,7 @@ CREATE DATABASE CarDealerShip;
 
 USE CarDealerShip;
 
-CREATE TABLE CarDealerShip (
+CREATE TABLE DealerShips (
     DealerShip_ID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(50),
     Address VARCHAR(50),
@@ -24,11 +24,20 @@ CREATE TABLE vehicles (
 CREATE TABLE inventory (
     dealership_id INT,
     VIN VARCHAR(17),
-    PRIMARY KEY (dealership_id, VIN),
-    FOREIGN KEY (dealership_id) REFERENCES CarDealerShip(DealerShip_ID),
+    FOREIGN KEY (dealership_id) REFERENCES DealerShips(DealerShip_ID),
+    FOREIGN KEY (VIN) REFERENCES vehicles(VIN)
+    );
+    CREATE TABLE sales_contracts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    VIN VARCHAR(17),
+    ContractDate DATE,
+    CostumerName VARCHAR(100),
+    CostumerAddress VARCHAR(17),
+    SaleAmount DECIMAL(10, 2),
+    DealerShipsName VARCHAR(50),
     FOREIGN KEY (VIN) REFERENCES vehicles(VIN)
 );
-INSERT INTO CarDealerShip (Name, Address, Phone)
+INSERT INTO DealerShips (Name, Address, Phone)
 VALUES
     ('MJ Shop', '123 Main St', '929-408-5789'),
     ('Family Autos', '170 Jerom ave ave', '646-666-3666'),
@@ -47,5 +56,11 @@ VALUES
     (1, 'JM1BL1SF4A1100003'),
     (3, 'WAUZZZ8K9BA000004'),
     (2, '1G1YZ2DE0B5800005');
-
+INSERT INTO sales_contracts (VIN, ContractDate, CostumerName, CostumerAddress, SaleAmount, DealerShipsName)
+VALUES
+    ('1HGCM82633A000001', '2023-01-15', 'Amjad Naji', '123 Oak St', 12000.00,'MJ Shop'),
+    ('5XYZU3LBXCG000002', '2023-02-20', 'Sasha W', '456 Elm St', 13000.00, 'Family Autos'),
+    ('JM1BL1SF4A1100003', '2023-03-10', 'Raymond M', '789 Pine St', 15000.00, 'Car Sales'),
+    ('WAUZZZ8K9BA000004', '2023-04-05', 'Jahiem Marte', '101 Maple St', 18000.00, 'Car Sales'),
+    ('1G1YZ2DE0B5800005', '2023-05-20', 'Mohamed Ali', '222 Cedar St', 35000.00, 'Car Sales');
 
